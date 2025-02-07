@@ -7,7 +7,7 @@ export default function Home() {
       <header className="fixed top-0 w-full z-50 bg-[#070B14]/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-white">Lander</span>
+            <span className="text-2xl font-bold text-white">MockLabs</span>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
@@ -23,9 +23,9 @@ export default function Home() {
             <Link href="#careers" className="text-gray-300 hover:text-white transition-colors">
               Careers
             </Link>
-            <button className="bg-[#1D2333] text-white hover:bg-[#2A3447]">
+            <Link className=" text-gray-300 hover:text-white">
               Contact Us
-            </button>
+            </Link>
           </nav>
         </div>
       </header>
@@ -43,15 +43,15 @@ export default function Home() {
           </div>
 
           <h1 className="text-4xl md:text-6xl font-bold text-white max-w-4xl mx-auto leading-tight mb-6">
-            We Create Landing Page That Sets You Apart from the Competition
+          Ace JEE with Precision: Your Path to Top Ranks Starts Here"
           </h1>
 
           <p className="text-gray-400 text-xl mb-12 max-w-2xl mx-auto">
-            Elevate your online presence with high-conversion landing pages.
+          Master JEE Main & Advanced with AI-powered mock tests, adaptive learning, and real-time performance analysis—tailored for your success.
           </p>
 
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg rounded-full">
-            Start a Project
+          <button className="bg-blue-600 hover:bg-blue-700 hover:cursor-pointer font-semibold text-white px-12 py-3 text-xl rounded-full">
+            Start a Test
           </button>
         </div>
       </section>
@@ -66,10 +66,10 @@ export default function Home() {
             </div>
             <div className="text-center p-6 bg-gradient-to-b from-gray-800/50 to-transparent rounded-xl">
               <div className="text-5xl font-bold text-white mb-2">50+</div>
-              <div className="text-gray-400">Projects completed</div>
+              <div className="text-gray-400">Tests uploaded</div>
             </div>
             <div className="text-center p-6 bg-gradient-to-b from-gray-800/50 to-transparent rounded-xl">
-              <div className="text-5xl font-bold text-white mb-2">12+</div>
+              <div className="text-5xl font-bold text-white mb-2">2+</div>
               <div className="text-gray-400">Years of experience</div>
             </div>
           </div>
