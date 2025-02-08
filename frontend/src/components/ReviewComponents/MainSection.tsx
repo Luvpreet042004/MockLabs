@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TopBar from "./TopBar";
 import QuestionSection from "./QuestionSection";
-import { useQuestions } from "../context/QuestionStateContext";
+import { useQuestions } from "../../context/QuestionStateContext";
 
 const MainSection: React.FC = () => {
   const {updateAnswer, updateStatus,getStatus,getAnswer} = useQuestions();

@@ -4,25 +4,25 @@ import {Link, useNavigate} from "react-router-dom"
 export default function Home() {
   const navigate = useNavigate()
   return (
-    <div className="min-h-screen scroll-smooth bg-[#070B14]">
+    <div className="min-h-screen scroll-smooth text-black bg-[#fffff]">
       {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-[#070B14]/80 backdrop-blur-sm">
+      <header className="fixed top-0 w-full z-50 bg-pink/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-white">MockLabs</span>
+            <span className="text-2xl font-bold text-black">MockLabs</span>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="#why-us" className="text-gray-300 hover:text-white transition-colors">
+            <Link href="#why-us" className="text-black-300 hover:text-white transition-colors">
               Why Us
             </Link>
-            <Link href="#pricing" className="text-gray-300 hover:text-white transition-colors">
+            <Link href="#pricing" className="text-black-300 hover:text-white transition-colors">
               Pricing
             </Link>
-            <Link href="#works" className="text-gray-300 hover:text-white transition-colors">
+            <Link href="#works" className="text-black-300 hover:text-white transition-colors">
               Works
             </Link>
-            <Link href="#careers" className="text-gray-300 hover:text-white transition-colors">
+            <Link href="#careers" className="text-balck-300 hover:text-white transition-colors">
               Careers
             </Link>
             <Button onClick={()=>navigate('/signin')} className=" text-gray-300 hover:text-white hover:cursor-pointer">
@@ -44,7 +44,7 @@ export default function Home() {
             </svg>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold text-white max-w-4xl mx-auto leading-tight mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold text-black max-w-4xl mx-auto leading-tight mb-6">
           Ace JEE with Precision: Your Path to Top Ranks Starts Here"
           </h1>
 

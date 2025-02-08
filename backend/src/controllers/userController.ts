@@ -7,53 +7,70 @@ const auth =admin.auth();
 
 const prisma = new PrismaClient();
 
-export const registerUser = async (req: Request, res: Response) => {
-    try {
-        const { email, name } = req.body;
-
-        if (!email || !name) { 
-          res.status(400).json({ message: "Email and name are required" });
-          return
-        }
-
-        // Check if user already exists
-        const existingUser = await prisma.user.findUnique({ where: { email } });
-        if (existingUser) {
-          res.status(409).json({ message: "User already exists" });
-          return
-        }
-
-        const newUser = await prisma.user.create({
-            data: { email, name },
-        });
-
-        res.status(201).json({ message: "User Created Successfully", user: newUser });
-    } catch (error) {
-        console.error("Error registering user:", error);
-        res.status(500).json({ message: "Something went wrong" });
-    }
-};
-
 export const loginUser = async (req: Request, res: Response) => {
     try {
         const email = req.user?.email;
 
+        // Validate email
         if (!email) {
-          res.status(401).json({ message: "Unauthorized request" });
-          return
+            res.status(401).json({ message: "Unauthorized request: Email not provided" });
+            return;
         }
 
+        // Check if user exists
         const user = await prisma.user.findUnique({ where: { email } });
 
-        if (!user) {
-          res.status(404).json({ message: "User not found" });
-          return
-        }
+        if (user) {
+            // User exists, log them in
+            res.status(200).json({ 
+                message: "User logged in successfully", 
+                id : user.id,
+                name : user.name,
+                email : user.email 
+            });
+            return
+        } else {
+            // User doesn't exist, create a new user
+            const { name } = req.body;
 
-        res.status(200).json({ message: "User logged in successfully", user });
+            // Validate name
+            if (!name) {
+                res.status(400).json({ message: "Name is required for new users" });
+                return;
+            }
+
+            const newUser = await prisma.user.create({
+                data: { 
+                    email, 
+                    name 
+                },
+            });
+
+            res.status(201).json({ 
+                message: "User created successfully", 
+                id : newUser.id,
+                email : newUser.email,
+                name : newUser.name
+            });
+            return
+        }
     } catch (error) {
         console.error("Error during login:", error);
-        res.status(500).json({ message: "Internal server error" });
+
+        // Handle specific errors
+        if (error instanceof Error) {
+            res.status(500).json({ 
+                message: "Internal server error", 
+                error: error.message 
+            });
+
+            return
+        }
+
+        res.status(500).json({ 
+            message: "Internal server error" 
+        });
+        return
     }
 };
 

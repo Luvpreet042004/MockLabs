@@ -9,7 +9,6 @@ declare global {
     namespace Express {
         interface Request {
             user?: {
-                id: number;
                 uid: string;
                 email: string;
             };
@@ -36,19 +35,14 @@ const authenticate = async (req: Request, res: Response, next: NextFunction) => 
         }
 
         const email = decodedToken.email || "";
-        const authenticatedUser = await prisma.user.findUnique({ where: { email } });
-
-        if (!authenticatedUser) {
-            res.status(404).json({ error: "User not found in the database" });
-            return
-        }
 
         // Attach user info to request
         req.user = {
-            id: authenticatedUser.id,
             uid: decodedToken.uid,
-            email: authenticatedUser.email,
+            email,
         };
+
+
 
         next();
     } catch (error) {

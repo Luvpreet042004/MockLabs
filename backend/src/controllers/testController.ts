@@ -42,7 +42,9 @@ export const addTest = async (req: Request, res: Response) => {
 export const getTest = async (req: Request, res: Response) => {
     try {
         const { testName } = req.params;
-        const user = req.user;
+        const email = req.user?.email;
+
+        const user = await prisma.user.findUnique({where : {email}})
 
         if (!testName) {
             res.status(400).json({ msg: "Test name is required" });return
@@ -75,8 +77,9 @@ export const getTest = async (req: Request, res: Response) => {
 
 export const getUserStats = async (req: Request, res: Response) => {
     try {
-        const user = req.user; // Get authenticated user from middleware
+        const email = req.user?.email; // Get authenticated user from middleware
 
+        const user = await prisma.user.findUnique({where : {email}})
         if (!user) {
             return res.status(401).json({ msg: "Unauthorized: User not found" });
         }

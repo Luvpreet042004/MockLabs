@@ -10,6 +10,12 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON bodies
+// Logging Middleware
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  next();
+});
+
 
 // Routes
 app.use('/api', routes);

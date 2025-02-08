@@ -1,13 +1,11 @@
 import React from "react";
 import { QuestionsProvider } from "../context/QuestionStateProvider";
-import Sidebar from "../components/Sidebar";
-import MainSection from "../components/MainSection";
-import { TimerProvider } from "@/context/TImerProvider";
+import Sidebar from "../components/ReviewComponents/Sidebar";
+import MainSection from "../components/ReviewComponents/MainSection";
 
 
-const TestScreen :React.FC = ()=>{
+const ReviewScreen :React.FC = ()=>{
     return(
-      <TimerProvider>
       <QuestionsProvider totalQuestions={90}>
     <div className="flex w-screen h-screen">
         <Sidebar />
@@ -16,8 +14,7 @@ const TestScreen :React.FC = ()=>{
       </div>
     </div>
       </QuestionsProvider>
-      </TimerProvider>
     )
 }
 
-export default TestScreen;
+export default ReviewScreen;

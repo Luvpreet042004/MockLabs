@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { auth,provider,signInWithPopup } from "../firebaseConfig";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 const LOCAL_STORAGE_KEYS = {
   AUTH_TOKEN: 'authToken',
@@ -18,6 +19,7 @@ interface BackendResponse {
 }
 
 export default function AuthPage() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false)
 
   const handleGoogleSignIn = async () => {
@@ -27,7 +29,7 @@ export default function AuthPage() {
       const user = result.user;
       const token = await user.getIdToken();
       const backendResponse : BackendResponse = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/user/login`,
         { name: user.displayName },
         {
           headers: {
@@ -46,10 +48,8 @@ export default function AuthPage() {
         localStorage.setItem(LOCAL_STORAGE_KEYS.USER_PHOTO, userPhoto);
       }
   
-      // Send user details to your backend for authentication
-      console.log("User Info:", user);
-  
-      // Handle successful sign-in (e.g., store user info in context or state)
+      navigate('/dashboard',{ replace: true });
+      window.history.pushState(null,'/dashboard/')
     } catch (error) {
       console.error("Authentication error:", error);
     } finally {
@@ -58,12 +58,12 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070B14] flex flex-col">
+    <div className="min-h-screen flex flex-col scroll-smooth text-black bg-[radial-gradient(circle,_#db2777_0%,_#faf5ff_25%,_white_100%)]">
       {/* Header */}
-      <header className="w-full z-50 bg-[#070B14]/80">
+      <header className="w-full z-50 bg-gradient-to-l from-blue-600 to-purple-100 shadow">
         <div className="container mx-auto px-4 h-20 flex items-center">
           <div className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-white">MockLabs</span>
+            <span className="text-2xl font-bold text-black">MockLabs</span>
           </div>
         </div>
       </header>
@@ -72,10 +72,10 @@ export default function AuthPage() {
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="bg-[#1D2333] rounded-2xl p-8 w-full max-w-md relative overflow-hidden">
           {/* Background Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-600/10 to-transparent" />
+          <div className="absolute inset-0 bg-black" />
 
           {/* Content */}
-          <div className="relative z-10">
+          <div className="relative z-10 ">
             <div className="text-center mb-8">
               <h1 className="text-2xl font-bold text-white mb-2">Welcome to MockLabs</h1>
               <p className="text-gray-400">Sign in to access your personalized JEE preparation</p>
