@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button"
 import {Link, useNavigate} from "react-router-dom"
 
 export default function Home() {
@@ -24,9 +25,9 @@ export default function Home() {
             <Link href="#careers" className="text-gray-300 hover:text-white transition-colors">
               Careers
             </Link>
-            <button onClick={()=>navigate('/signin')} className=" text-gray-300 hover:text-white hover:cursor-pointer">
+            <Button onClick={()=>navigate('/signin')} className=" text-gray-300 hover:text-white hover:cursor-pointer">
                SignUp
-            </button>
+            </Button>
           </nav>
         </div>
       </header>
@@ -51,9 +52,9 @@ export default function Home() {
           Master JEE Main & Advanced with AI-powered mock tests, adaptive learning, and real-time performance analysis—tailored for your success.
           </p>
 
-          <button className="bg-blue-600 hover:bg-blue-700 hover:cursor-pointer font-semibold text-white px-12 py-3 text-xl rounded-full">
+          <Button variant={'secondary'} className="bg-blue-600 hover:bg-blue-700 hover:cursor-pointer font-semibold text-white px-12 py-3 text-xl rounded-full">
             Start a Test
-          </button>
+          </Button>
         </div>
       </section>
 
