@@ -1,8 +1,9 @@
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 export default function Home() {
+  const navigate = useNavigate()
   return (
-    <div className="min-h-screen bg-[#070B14]">
+    <div className="min-h-screen scroll-smooth bg-[#070B14]">
       {/* Header */}
       <header className="fixed top-0 w-full z-50 bg-[#070B14]/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
@@ -23,9 +24,9 @@ export default function Home() {
             <Link href="#careers" className="text-gray-300 hover:text-white transition-colors">
               Careers
             </Link>
-            <Link className=" text-gray-300 hover:text-white">
-              Contact Us
-            </Link>
+            <button onClick={()=>navigate('/signin')} className=" text-gray-300 hover:text-white hover:cursor-pointer">
+               SignUp
+            </button>
           </nav>
         </div>
       </header>
@@ -79,9 +80,9 @@ export default function Home() {
       {/* Features Section */}
       <section className="container mx-auto px-4 py-20">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Why Choose Lander</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Why Choose MockLabs</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            We combine creativity with strategic thinking to deliver landing pages that convert.
+            We combine creativity with strategic thinking to deliver best Enviroment.
           </p>
         </div>
 
@@ -101,9 +102,9 @@ export default function Home() {
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-20">
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Transform Your Online Presence?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Transform Your Jee Prep?</h2>
           <p className="text-white/80 mb-8 max-w-2xl mx-auto">
-            Join hundreds of satisfied customers who have elevated their business with our landing pages.
+            Join hundreds of satisfied students who have elevated their prepration with our application.
           </p>
           <button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-6 text-lg rounded-full">
             Get Started Now
@@ -117,7 +118,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div>
               <Link href="/" className="text-2xl font-bold text-white mb-6 block">
-                Lander
+                MockLabs
               </Link>
               <p className="text-gray-400">Creating high-converting landing pages that drive results.</p>
             </div>
@@ -183,7 +184,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-12 pt-8 text-center">
-            <p className="text-gray-400">© 2024 Lander. All rights reserved.</p>
+            <p className="text-gray-400">© 2024 MockLabs. All rights reserved.</p>
           </div>
         </div>
       </footer>
@@ -193,8 +194,8 @@ export default function Home() {
 
 const features = [
   {
-    title: "High-Converting Designs",
-    description: "Our landing pages are strategically designed to maximize conversion rates and drive results.",
+    title: "Exam-Like Enviroment",
+    description: "Our Test Screens are strategically designed to maximize concentration of student.",
     icon: (
       <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -217,7 +218,7 @@ const features = [
   },
   {
     title: "Data-Driven Approach",
-    description: "We use analytics and user behavior data to continuously improve and optimize your pages.",
+    description: "We use analytics and student's behavior data to continuously improve and optimize your experiance.",
     icon: (
       <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path

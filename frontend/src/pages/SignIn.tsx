@@ -1,30 +1,70 @@
 import { useState } from "react"
-import {Link} from "react-router-dom"
+import { auth,provider,signInWithPopup } from "../firebaseConfig";
+import axios from 'axios'
+
+const LOCAL_STORAGE_KEYS = {
+  AUTH_TOKEN: 'authToken',
+  USER_NAME: 'userName',
+  USER_ID: 'userId',
+  USER_PHOTO: 'userPhoto',
+};
+
+// Interface for backend response
+interface BackendResponse {
+  message: string;
+  id: number;
+  email: string;
+  name: string;
+}
 
 export default function AuthPage() {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleGoogleSignIn = async () => {
-    setIsLoading(true)
-    // Add your Google authentication logic here
+    setIsLoading(true);
     try {
-      // Implement Google Sign In
-      console.log("Google Sign In Clicked")
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const token = await user.getIdToken();
+      const backendResponse : BackendResponse = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/login`,
+        { name: user.displayName },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const userId = '' + backendResponse.id;
+      const userPhoto = user.photoURL || "";
+
+      if(backendResponse && user.displayName){
+        localStorage.setItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN, token);
+        localStorage.setItem(LOCAL_STORAGE_KEYS.USER_NAME, user.displayName || '');
+        localStorage.setItem(LOCAL_STORAGE_KEYS.USER_ID, userId);
+        localStorage.setItem(LOCAL_STORAGE_KEYS.USER_PHOTO, userPhoto);
+      }
+  
+      // Send user details to your backend for authentication
+      console.log("User Info:", user);
+  
+      // Handle successful sign-in (e.g., store user info in context or state)
     } catch (error) {
-      console.error("Authentication error:", error)
+      console.error("Authentication error:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-[#070B14] flex flex-col">
       {/* Header */}
       <header className="w-full z-50 bg-[#070B14]/80">
         <div className="container mx-auto px-4 h-20 flex items-center">
-          <Link href="/" className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2">
             <span className="text-2xl font-bold text-white">MockLabs</span>
-          </Link>
+          </div>
         </div>
       </header>
 
@@ -43,9 +83,10 @@ export default function AuthPage() {
 
             {/* Google Sign In Button */}
             <button
-              onClick={handleGoogleSignIn}
+              onClick={()=>{console.log("clicked");
+              handleGoogleSignIn();}}
               disabled={isLoading}
-              className="w-full bg-white hover:bg-gray-50 text-gray-900 font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors duration-200 disabled:opacity-70"
+              className="w-full bg-white hover:cursor-pointer hover:bg-gray-50 text-gray-900 font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors duration-200 disabled:opacity-70"
             >
               {!isLoading ? (
                 <>
@@ -80,13 +121,13 @@ export default function AuthPage() {
             {/* Terms */}
             <p className="mt-6 text-center text-sm text-gray-400">
               By continuing, you agree to MockLabs&apos;s{" "}
-              <Link href="/terms" className="text-blue-400 hover:text-blue-300">
+              <div className="text-blue-400 hover:text-blue-300">
                 Terms of Service
-              </Link>{" "}
+              </div>{" "}
               and{" "}
-              <Link href="/privacy" className="text-blue-400 hover:text-blue-300">
+              <div className="text-blue-400 hover:text-blue-300">
                 Privacy Policy
-              </Link>
+              </div>
             </p>
           </div>
         </div>
