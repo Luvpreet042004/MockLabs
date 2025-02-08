@@ -6,7 +6,7 @@ const QuestionGrid: React.FC = () => {
   const navigate = useNavigate();
   const { questions } = useQuestions();
   const { paper } = useParams<{ paper: string;}>();
-
+ 
   // Function to get the color based on the question status
   const getBoxColor = (status: number) => {
     switch (status) {

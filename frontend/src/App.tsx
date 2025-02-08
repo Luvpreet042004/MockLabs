@@ -6,6 +6,8 @@ import DashboardPage from "./pages/Dashboard";
 import AnalyticsPage from "./components/Dashboard/sidebar/Analytics";
 import ProfilePage from "./components/Dashboard/sidebar/Profile";
 import ReviewScreen from "./pages/ReviewScreen";
+import { QuestionsProvider } from "./context/QuestionStateProvider";
+import { ComparisonProvider } from "./context/ComaprisionProvider";
 
 function App() {
   return (
@@ -13,7 +15,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/paper/:paper/:questionId" element={<TestScreen />} />
-        <Route path="/paper/review/:paper/:questionId" element={<ReviewScreen />} />
+        <Route path="/paper/review/:paper/:questionId" element={
+          <QuestionsProvider totalQuestions={90}>
+            <ComparisonProvider>
+            <ReviewScreen />
+            </ComparisonProvider>
+            </QuestionsProvider>
+          } />
         <Route path="/signin" element={<AuthPage />} />
         <Route path = "/dashboard/" element={<DashboardPage />} />
         <Route path="/dashboard/analytics" element={<AnalyticsPage />} />

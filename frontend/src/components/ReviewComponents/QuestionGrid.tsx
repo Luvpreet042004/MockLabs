@@ -1,30 +1,28 @@
 import React from "react";
 import { useQuestions } from "../../context/QuestionStateContext";
+import { useComparison } from "@/context/ComparisionContext";
 import { useNavigate,useParams } from "react-router-dom";
 
 const QuestionGrid: React.FC = () => {
   const navigate = useNavigate();
+  const {comparisonResults} = useComparison();
   const { questions } = useQuestions();
   const { paper } = useParams<{ paper: string;}>();
 
+
   // Function to get the color based on the question status
-  const getBoxColor = (status: number) => {
-    switch (status) {
-      case 0:
-        return "bg-gray-200"; // Not visited
-      case 1:
-        return "bg-amber-300"; // Marked for review
-      case 2:
-        return "bg-red-300"; // Visited but not answered
-      case 3:
-        return "bg-green-300"; // Answered
-      default:
-        return "bg-gray-200";
-    }
+  const getBoxColor = (questionId: number) => { 
+    const result = comparisonResults.find((r) => r.id === questionId);
+    
+    if (!result) return "bg-gray-200"; // Not attempted
+    
+    if (result.selectedAnswer === null) return "bg-yellow-300"; // Not answered
+    if (result.isCorrect) return "bg-green-300"; // Correct
+    return "bg-red-300"; // Incorrect
   };
 
   const handleClick = (qid : number) => {
-    navigate(`/paper/${paper}/${qid}`)
+    navigate(`/paper/review/${paper}/${qid}`)
   }
 
   return (
