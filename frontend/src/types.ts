@@ -3,7 +3,7 @@ export type QuestionStatus = 0 | 1 | 2 | 3; // 0: Not visited, 1: Marked for rev
 
 export interface Question {
   id: number;
-  answer: number | null; // 0 means not selected, 1-4 are possible answers
+  answer: number | null;
   status: QuestionStatus;
 }
 

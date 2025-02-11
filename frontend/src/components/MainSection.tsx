@@ -3,11 +3,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import TopBar from "./TopBar";
 import QuestionSection from "./QuestionSection";
 import { useQuestions } from "../context/QuestionStateContext";
+import { Button } from "./ui/button";
+import { useComparison } from "@/context/ComparisionContext";
+import axios from "axios";
 
 const MainSection: React.FC = () => {
-  const {updateAnswer, updateStatus,getStatus,getAnswer} = useQuestions();
+  const {updateAnswer, updateStatus,getStatus,getAnswer,questions} = useQuestions();
+  const {setSelectedAnswers,selectedAnswers,compareAnswers} = useComparison()
   const navigate = useNavigate();
   const { paper, questionId } = useParams<{ paper: string; questionId: string }>();
+  const [isReady,setIsReady] = useState<boolean>(false);
+  const [isCompareAns,setCompareAns] = useState<boolean>(false);
 
   const currentQuestionId = Number(questionId) || 1;
 
@@ -69,6 +75,51 @@ useEffect(() => {
     navigate(`/paper/${paper}/${nextId}`);
   };
 
+  useEffect(() => {
+    if (isReady && selectedAnswers.length > 0) { // Check if selectedAnswers is populated
+      navigate(`/paper/review/${paper}/1`, { replace: true });
+      window.history.pushState(null, '', `/paper/review/${paper}/1`);
+    }
+  }, [isReady, selectedAnswers,navigate,paper]); 
+  
+  const onSubmit = async () => {
+    console.log("questions:", questions);
+    setSelectedAnswers(questions);  // ✅ Ensure selectedAnswers is set first
+
+    try {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            console.error("No auth token found");
+            return;
+        }
+
+        console.log(paper);
+
+        const response = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/solution/answer`,
+            {
+                headers: { Authorization: `Bearer ${token}` },
+                params: { testName: paper },
+            }
+        );
+
+        const correctAnswer = response.data.answer;
+        console.log("response:", correctAnswer);
+
+        compareAnswers(correctAnswer);  // ✅ Compare answers immediately
+        setCompareAns(true);  // ✅ Set flag for completion
+
+    } catch (error) {
+        console.error("Error fetching correct answers:", error);
+    }
+};
+
+useEffect(() => {
+  if (isCompareAns) {
+      setIsReady(true);
+  }
+}, [isCompareAns]); 
+
   return (
     <div className="w-full flex flex-col min-h-screen bg-gray-50">
   {/* Top Bar */}
@@ -110,7 +161,7 @@ useEffect(() => {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex gap-3 mt-6">
+        <div className="grid grid-cols-2 gap-3 mt-6">
           <button
             onClick={() => handleNavigation(currentQuestionId - 1)}
             className={`flex-1 py-3 rounded-lg font-semibold transition-all
@@ -134,6 +185,11 @@ useEffect(() => {
           >
             {currentQuestionId < 90 ? "Next →" : "Finish Test"}
           </button>
+          <Button 
+          onClick={()=>onSubmit()}
+          className=" col-span-2 flex-1 py-3 rounded-lg bg-[#005FCC] hover:bg-blue-700 font-semibold text-white transition-all">
+            Submit
+          </Button>
         </div>
       </div>
     </div>

@@ -1,11 +1,5 @@
 import { createContext, useContext} from "react";
-
-
-export interface Answer {
-  id: number;
-  answer: number | null;
-  status: number;
-}
+import { Question } from "@/types";
 
 export interface ComparisonResult {
   id: number;
@@ -15,10 +9,11 @@ export interface ComparisonResult {
 }
 
 export interface ComparisonContextType {
-  selectedAnswers: Answer[];
-  setSelectedAnswers: (answers:Answer[]) => void;
-  comparisonResults: ComparisonResult[];
+  selectedAnswers: Question[];
+  setSelectedAnswers: (answers:Question[]) => void;
+  getComparedResult: (id : number)=> ComparisonResult;
   compareAnswers: (correctAnswers: number[]) => void;
+  comparisonResults : ComparisonResult[];
 }
 
 export const ComparisonContext = createContext<ComparisonContextType | undefined>(undefined);

@@ -3,13 +3,6 @@ import { auth,provider,signInWithPopup } from "../firebaseConfig";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 
-const LOCAL_STORAGE_KEYS = {
-  AUTH_TOKEN: 'authToken',
-  USER_NAME: 'userName',
-  USER_ID: 'userId',
-  USER_PHOTO: 'userPhoto',
-};
-
 // Interface for backend response
 interface BackendResponse {
   message: string;
@@ -42,10 +35,10 @@ export default function AuthPage() {
       const userPhoto = user.photoURL || "";
 
       if(backendResponse && user.displayName){
-        localStorage.setItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN, token);
-        localStorage.setItem(LOCAL_STORAGE_KEYS.USER_NAME, user.displayName || '');
-        localStorage.setItem(LOCAL_STORAGE_KEYS.USER_ID, userId);
-        localStorage.setItem(LOCAL_STORAGE_KEYS.USER_PHOTO, userPhoto);
+        localStorage.setItem("authToken", token);
+        localStorage.setItem("userName", user.displayName || '');
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("userPhoto", userPhoto);
       }
   
       navigate('/dashboard',{ replace: true });

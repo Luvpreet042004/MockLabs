@@ -7,6 +7,7 @@ import { TestResultsChart } from "../components/Dashboard/test-results-chart"
 import { TestResultsTable } from "../components/Dashboard/test-results-table"
 import DashboardLayout from "../components/Dashboard/layout"
 import { NewTestDialog } from "@/components/Dashboard/sidebar/New_test_Modal"
+import { useNavigate } from "react-router-dom"
 
 // Sample data - replace with your actual data source
 const testResults = [
@@ -37,6 +38,7 @@ const testResults = [
 ]
 
 export default function DashboardPage() {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState<string>("")
   const [isNewTestOpen, setIsNewTestOpen] = useState(false)
 
@@ -51,7 +53,7 @@ export default function DashboardPage() {
   return (
     <DashboardLayout>
     <div className="flex min-h-screen">
-      <DashboardSidebar openNewTest={() => setIsNewTestOpen(true)} />
+      <DashboardSidebar openNewTest={() => navigate("/paper/27_Jan_Shift_1/1")} />
       <main className="flex-1 p-8">
         <div className="flex flex-col gap-8">
           <h1 className="text-3xl font-bold">Welcome back, {firstName || "Student"}!</h1>

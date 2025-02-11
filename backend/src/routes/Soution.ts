@@ -14,10 +14,16 @@ router.get('/answer', async (req: Request, res: Response) => {
             return
         }
 
+        console.log("user ok");
+        
+
         if (!testName || typeof testName !== 'string') {
-            res.status(400).json({ message: "TestName must be specified as a string" });
+            res.status(400).json({ message: "TestName must be specified as a string",testName});
             return
         }
+
+        console.log(testName);
+        
 
         const solution = await prisma.solution.findUnique({
             where: { testName }
@@ -28,12 +34,12 @@ router.get('/answer', async (req: Request, res: Response) => {
             return
         }
 
-        res.status(200).json({ solution: solution.answer });
+        res.status(200).json({answer : solution.answer});
     } catch (error) {
         console.error("Error fetching solution:", error);
         res.status(500).json({ message: "Internal server error" });
     }
-});
+}); 
 
 
 router.post('/create',async(req:Request , res:Response)=>{
