@@ -4,36 +4,22 @@ import { Question } from "@/types";
 
 export const ComparisonProvider = ({ children }: { children: ReactNode }) => {
   const [selectedAnswers, setSelectedAnswers] = useState<Question[]>([]);
-  const [comparisonResults, setComparisonResults] = useState<ComparisonResult[]>([]);
-
-  useEffect(() => {
-    console.log("selectedAnswers (Provider):", selectedAnswers);
-    console.log("comparisonResults (Provider):",comparisonResults );
-  }, [selectedAnswers,comparisonResults]);
-
-  const compareAnswers = (correctAnswers: number[]) => {
-    const results = selectedAnswers.map(({ id, answer }) => ({
-        id,
-        selectedAnswer: answer,
-        correctAnswer: correctAnswers[id - 1] ?? null, // Ensure safe access
-        isCorrect: answer !== null && answer === correctAnswers[id - 1],
-    }));
-
-    console.log("Results:", results);
-    if(results.length == 90){
-      setComparisonResults(results);
-    }
-    console.log("comparisonResults :",comparisonResults);
-    
+  // Load comparison results from localStorage or create a default empty array
+const loadComparisonResults = (): ComparisonResult[] => {
+  const savedResults = localStorage.getItem("comparisonResults");
+  return savedResults ? JSON.parse(savedResults) : [];
 };
 
+// State for comparison results
+const [comparisonResults, setComparisonResults] = useState<ComparisonResult[]>(loadComparisonResults);
+
+// Sync with localStorage whenever comparisonResults change
 useEffect(() => {
-  console.log("Updated comparisonResults:", comparisonResults);
+  localStorage.setItem("comparisonResults", JSON.stringify(comparisonResults));
 }, [comparisonResults]);
 
-
   const getComparedResult = (id: number): ComparisonResult => {
-    const result = comparisonResults.find(result => result.id === id);
+    const result = comparisonResults[id -1];
     if (!result) {
       throw new Error(`ComparisonResult with id ${id} not found`);
     }
@@ -43,7 +29,7 @@ useEffect(() => {
 
   return (
     <ComparisonContext.Provider
-      value={{ selectedAnswers, setSelectedAnswers, compareAnswers, getComparedResult,comparisonResults }}
+      value={{ selectedAnswers, setSelectedAnswers, setComparisonResults, getComparedResult,comparisonResults }}
     >
       {children}
     </ComparisonContext.Provider>

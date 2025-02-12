@@ -6,7 +6,7 @@ import { useQuestions } from "../../context/QuestionStateContext";
 import { useComparison } from "../../context/ComparisionContext"; // Import the useComparison hook
 
 const MainSection: React.FC = () => {
-  const { updateAnswer, updateStatus, getStatus, getAnswer } = useQuestions();
+  const {updateStatus, getStatus, getAnswer } = useQuestions();
   const { getComparedResult } = useComparison(); // Use the useComparison hook
   const navigate = useNavigate();
   const { paper, questionId } = useParams<{ paper: string; questionId: string }>();
@@ -42,17 +42,6 @@ const MainSection: React.FC = () => {
   }, [currentQuestionId, paper, getAnswer, getStatus, updateStatus,getComparedResult]);
 
   // Handle answer selection
-  const handleAnswerChange = (option: number | null) => {
-    setSelectedAnswer(option);
-
-    if (option) {
-      updateStatus(currentQuestionId, 3)
-      updateAnswer(currentQuestionId, option)
-    } else {
-      updateStatus(currentQuestionId, 2)
-      updateAnswer(currentQuestionId, null)
-    }
-  };
 
   // Optimistic UI Update on Navigation
   const handleNavigation = (nextId: number) => {
@@ -112,8 +101,6 @@ const MainSection: React.FC = () => {
                       name="option"
                       value={option}
                       checked={isSelected}
-                      onChange={() => { handleAnswerChange(option) }}
-                      onClick={() => { if (selectedAnswer == option) { handleAnswerChange(null) } }}
                       className="w-5 h-5 cursor-pointer accent-white"
                     />
                   </label>

@@ -12,11 +12,17 @@ const QuestionGrid: React.FC = () => {
 
   // Function to get the color based on the question status
   const getBoxColor = (questionId: number) => { 
-    const result = comparisonResults.find((r) => r.id === questionId);
+    console.log("comparisionResults : ", comparisonResults);
+    console.log("Typeof comparisionResults",typeof comparisonResults);
+    console.log("id =1 comparisonResults",comparisonResults[0]);
+    
+    
+    const result = comparisonResults[questionId-1];
+
     
     if (!result) return "bg-gray-200"; // Not attempted
     
-    if (result.selectedAnswer === null) return "bg-yellow-300"; // Not answered
+    if (result.selectedAnswer === null) return "bg-gray-200"; // Not answered
     if (result.isCorrect) return "bg-green-300"; // Correct
     return "bg-red-300"; // Incorrect
   };
@@ -31,7 +37,7 @@ const QuestionGrid: React.FC = () => {
         {questions.map((q) => (
           <button
             key={q.id} onClick={()=>handleClick(q.id)}
-            className={`flex py-0.5 items-center hover:cursor-pointer justify-center rounded-lg ${getBoxColor(q.status)}`}
+            className={`flex py-0.5 items-center hover:cursor-pointer justify-center rounded-lg ${getBoxColor(q.id)}`}
           >
             {q.id}
           </button>

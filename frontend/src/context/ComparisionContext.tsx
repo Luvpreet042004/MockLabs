@@ -6,14 +6,15 @@ export interface ComparisonResult {
   selectedAnswer: number | null;
   correctAnswer: number;
   isCorrect: boolean;
+  score : -1 | 0 | 4;
 }
 
 export interface ComparisonContextType {
   selectedAnswers: Question[];
   setSelectedAnswers: (answers:Question[]) => void;
   getComparedResult: (id : number)=> ComparisonResult;
-  compareAnswers: (correctAnswers: number[]) => void;
   comparisonResults : ComparisonResult[];
+  setComparisonResults : (comparisonresult : ComparisonResult[])=> void
 }
 
 export const ComparisonContext = createContext<ComparisonContextType | undefined>(undefined);

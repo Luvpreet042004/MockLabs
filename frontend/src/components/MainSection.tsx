@@ -9,11 +9,10 @@ import axios from "axios";
 
 const MainSection: React.FC = () => {
   const {updateAnswer, updateStatus,getStatus,getAnswer,questions} = useQuestions();
-  const {setSelectedAnswers,selectedAnswers,compareAnswers} = useComparison()
+  const {setComparisonResults} = useComparison()
   const navigate = useNavigate();
   const { paper, questionId } = useParams<{ paper: string; questionId: string }>();
   const [isReady,setIsReady] = useState<boolean>(false);
-  const [isCompareAns,setCompareAns] = useState<boolean>(false);
 
   const currentQuestionId = Number(questionId) || 1;
 
@@ -58,7 +57,7 @@ useEffect(() => {
       updateAnswer(currentQuestionId,null)
     }
   };
-
+ 
   // Optimistic UI Update on Navigation
   const handleNavigation = (nextId: number) => {
     setSelectedAnswer(null);
@@ -76,15 +75,14 @@ useEffect(() => {
   };
 
   useEffect(() => {
-    if (isReady && selectedAnswers.length > 0) { // Check if selectedAnswers is populated
+    if (isReady) { // Check if selectedAnswers is populated
       navigate(`/paper/review/${paper}/1`, { replace: true });
       window.history.pushState(null, '', `/paper/review/${paper}/1`);
     }
-  }, [isReady, selectedAnswers,navigate,paper]); 
+  }, [isReady,navigate,paper]); 
   
   const onSubmit = async () => {
-    console.log("questions:", questions);
-    setSelectedAnswers(questions);  // ✅ Ensure selectedAnswers is set first
+    console.log("Sending questions:", questions);
 
     try {
         const token = localStorage.getItem("authToken");
@@ -93,32 +91,24 @@ useEffect(() => {
             return;
         }
 
-        console.log(paper);
-
-        const response = await axios.get(
-            `${import.meta.env.VITE_BACKEND_URL}/solution/answer`,
+        const response = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/solution/compare`, // Change API endpoint
+            { questions, testName: paper }, // Send questions to backend
             {
                 headers: { Authorization: `Bearer ${token}` },
-                params: { testName: paper },
             }
         );
 
-        const correctAnswer = response.data.answer;
-        console.log("response:", correctAnswer);
+        console.log("Compared Results:", response.data);
+        setComparisonResults(response.data.results); // Store the comparison results
+        localStorage.setItem("comparisonResults", JSON.stringify(response.data));
 
-        compareAnswers(correctAnswer);  // ✅ Compare answers immediately
-        setCompareAns(true);  // ✅ Set flag for completion
-
+        setIsReady(true); // Now it's ready to display
     } catch (error) {
-        console.error("Error fetching correct answers:", error);
+        console.error("Error comparing answers:", error);
     }
 };
 
-useEffect(() => {
-  if (isCompareAns) {
-      setIsReady(true);
-  }
-}, [isCompareAns]); 
 
   return (
     <div className="w-full flex flex-col min-h-screen bg-gray-50">
