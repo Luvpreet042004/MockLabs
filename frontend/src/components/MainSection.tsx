@@ -16,7 +16,7 @@ const MainSection: React.FC = () => {
   const navigate = useNavigate();
   const { paper, questionId } = useParams<{ paper: string; questionId: string }>();
   const [isReady, setIsReady] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>()
+  const [isLoading, setIsLoading] = useState<boolean>();
 
   const currentQuestionId = Number(questionId) || 1;
 
@@ -107,9 +107,11 @@ const MainSection: React.FC = () => {
         return;
       }
 
+      const timeTaken = 10800 - time;
+
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/solution/compare`,
-        { questions, testName: paper },
+        { questions, testName: paper,timeTaken },
         {
           headers: { Authorization: `Bearer ${token}` },
         }

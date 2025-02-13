@@ -15,3 +15,20 @@ export interface QuestionsContextType {
   getStatus : (id : number)=>QuestionStatus | undefined;
   getAnswer : (id : number)=>number | null;
 }
+
+export interface TestScore {
+  id:number
+  userId : number;
+  name: string;
+  mathScore: number;
+  physicsScore: number;
+  chemistryScore: number;
+  accuracy: string;
+  timeTaken: number;
+  totalScore:number;
+  createdAt: string;
+}
+
+export interface TestResultsTableProps {
+  results: TestResult[]
+}

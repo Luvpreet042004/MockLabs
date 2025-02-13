@@ -110,3 +110,51 @@ export const deleteUser = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error", error });
   }
 };
+
+const formatDateToIST = (date: Date) => {
+  return new Date(date).toLocaleString("en-IN", { 
+    timeZone: "Asia/Kolkata", 
+    year: "numeric", 
+    month: "long", 
+    day: "numeric", 
+    hour: "2-digit", 
+    minute: "2-digit", 
+    second: "2-digit",
+    hour12: true
+  });
+};
+
+export const getProfile = async (req: Request, res: Response) => {
+  try {
+    const email = req.user?.email;
+
+    // Fetch user details
+    const user = await prisma.user.findUnique({
+      where: { email },
+      include: { tests: true },
+    });
+
+    if (!user) {
+       res.status(404).json({ message: "User not found" });
+       return
+    }
+
+    const totalTests = user.tests.length;
+
+    const totalScoreSum = user.tests.reduce((sum, test) => sum + test.totalScore, 0);
+    const bestScore = Math.max(...user.tests.map(test => test.totalScore), 0);
+    const averageScore = totalTests > 0 ? (totalScoreSum / totalTests).toFixed(2) : 0;
+
+    res.json({
+      name: user.name,
+      email: user.email,
+      accountCreated: formatDateToIST(user.createdAt),
+      totalTests,
+      averageScore: `${averageScore}%`,
+      bestScore: `${bestScore}%`,
+    });
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

@@ -33,7 +33,7 @@ export default function AllTestsPage() {
       <h1 className="text-3xl font-bold mb-6">All Tests</h1>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {allTests.map((test) => (
-          <Card
+          <Card 
             key={test.id}
             className="cursor-pointer hover:bg-accent transition-colors"
             onClick={() => navigate(`/dashboard/analytics/${test.id}`)}

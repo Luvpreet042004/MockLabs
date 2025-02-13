@@ -1,13 +1,12 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { CalendarDays, Mail, User } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import axios from "axios"
 
 interface UserProfile {
   name: string
   email: string
-  createdAt: string
+  accountCreated: string
   totalTests: number
   averageScore: number
   bestScore: number
@@ -17,24 +16,33 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState<UserProfile>({
     name: "",
     email: "",
-    createdAt: "",
+    accountCreated: "",
     totalTests: 0,
     averageScore: 0,
     bestScore: 0,
   })
 
   useEffect(() => {
-    // Simulate fetching profile data
-    // Replace with actual API call
-    const mockProfile = {
-      name: localStorage.getItem("firstName") || "John Doe",
-      email: "student@example.com",
-      createdAt: "2024-01-01",
-      totalTests: 15,
-      averageScore: 85,
-      bestScore: 95,
+    const fetchProfile = async ()=>{
+      try {
+        const token = localStorage.getItem("authToken")
+
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/user/profile`,{
+          headers:{
+            Authorization : `Bearer ${token}`,
+          }
+        }
+      )
+
+        setProfile(response.data)
+        console.log("Profile :",profile);
+        
+      } catch (error) {
+        console.log(error);
+        
+      }
     }
-    setProfile(mockProfile)
+    fetchProfile()
   }, [])
 
   return (
@@ -64,7 +72,7 @@ export default function ProfilePage() {
               <CalendarDays className="h-5 w-5 text-muted-foreground" />
               <div>
                 <p className="text-sm text-muted-foreground">Account Created</p>
-                <p className="font-medium">{profile.createdAt}</p>
+                <p className="font-medium">{profile.accountCreated}</p>
               </div>
             </div>
           </CardContent>

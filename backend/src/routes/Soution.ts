@@ -74,7 +74,7 @@ router.post("/compare", async (req: Request, res: Response) => {
             return
         }
         const user = await prisma.user.findUnique({where : {email}})
-        const { questions, testName }: { questions: Question[]; testName: string } = req.body;
+        const { questions, testName,timeTaken }: { questions: Question[]; testName: string ;timeTaken: number} = req.body;
 
         // Fetch correct answers from the Solution table
         const solution = await prisma.solution.findUnique({
@@ -146,7 +146,7 @@ router.post("/compare", async (req: Request, res: Response) => {
             chemistryScore,
             totalScore,
             accuracy, 
-            timeTaken : 270,
+            timeTaken,
             userId
         }})
 

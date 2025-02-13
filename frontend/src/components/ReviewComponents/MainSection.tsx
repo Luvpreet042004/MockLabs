@@ -19,9 +19,6 @@ const MainSection: React.FC = () => {
     image: `https://res.cloudinary.com/dls4wze5d/image/upload/f_auto,q_auto/v1/papers/${paper}/Image_${currentQuestionId}`,
   });
   // State for answer selection
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [inputAnswer, setInputAnswer] = useState<number | null>(null);
-
   const comparedResult = getComparedResult(currentQuestionId);
 
   useEffect(() => {
@@ -33,21 +30,10 @@ const MainSection: React.FC = () => {
       image: `https://res.cloudinary.com/dls4wze5d/image/upload/f_auto,q_auto/v1/papers/${paper}/Image_${currentQuestionId}`,
     });
 
-    const savedAnswer = getAnswer(currentQuestionId);
-    if ([...Array(10).keys()].map(i => i + 21).includes(currentQuestionId) ||
-        [...Array(10).keys()].map(i => i + 51).includes(currentQuestionId) ||
-        [...Array(10).keys()].map(i => i + 81).includes(currentQuestionId)) {
-      setInputAnswer(savedAnswer);
-    } else {
-      setSelectedAnswer(savedAnswer);
-    }
-
     console.log("rerender");
   }, [currentQuestionId, paper, getAnswer, getStatus, updateStatus, getComparedResult]);
 
   const handleNavigation = (nextId: number) => {
-    setSelectedAnswer(null);
-    setInputAnswer(null);
     if (nextId < 1) return;
 
     setCurrentQuestion({
@@ -74,7 +60,7 @@ const MainSection: React.FC = () => {
                 <label className="block font-bold text-lg mb-2">Your Answer</label>
                 <input
                   type="text"
-                  value={inputAnswer ?? ""}
+                  value={comparedResult.selectedAnswer ?? ""}
                   readOnly
                   className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-700"
                 />
@@ -86,9 +72,10 @@ const MainSection: React.FC = () => {
             ) : (
               <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
                 {[1, 2, 3, 4].map((option) => {
-                  const isSelected = selectedAnswer === option;
+                  const isSelected = comparedResult.selectedAnswer === option;
                   const isCorrect = comparedResult.correctAnswer === option;
                   const isIncorrect = isSelected && !isCorrect;
+                  
 
                   return (
                     <label

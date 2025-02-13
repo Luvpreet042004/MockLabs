@@ -1,18 +1,34 @@
-"use client"
-
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-
-const data = [
-  { name: "90-100", value: 20 },
-  { name: "80-89", value: 40 },
-  { name: "70-79", value: 25 },
-  { name: "< 70", value: 15 },
-]
+import { useEffect,useState } from "react"
+import axios from "axios"
 
 const COLORS = ["#00C49F", "#0088FE", "#FFBB28", "#FF8042"]
 
 export function ScoreDistribution() {
+  const [data,setData] = useState([])
+
+  useEffect(() => {
+    const fetchAvg = async ()=>{
+      try {
+        const token = localStorage.getItem("authToken")
+
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/test/scoreDist`,{
+          headers:{
+            Authorization : `Bearer ${token}`,
+          }
+        }
+      )
+
+        setData(response.data)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchAvg()
+  }, [])
+
+
   return (
     <Card>
       <CardHeader>
@@ -31,7 +47,7 @@ export function ScoreDistribution() {
               fill="#8884d8"
               dataKey="value"
             >
-              {data.map((entry, index) => (
+              {data.map((entry,index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
