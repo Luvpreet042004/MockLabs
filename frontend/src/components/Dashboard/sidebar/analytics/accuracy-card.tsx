@@ -63,13 +63,13 @@ export function AccuracyCard() {
             width={400}
             height={400}
             innerRadius="100%" 
-            outerRadius="140%"
+            outerRadius="117%"
             data={data}
             startAngle={230}
             endAngle={-50}
           >
             <PolarAngleAxis type="number" domain={[0, 100]} angleAxisId={0} tick={false} />
-            <RadialBar background dataKey="value" cornerRadius={40} fill="" barSize={10}/>
+            <RadialBar background dataKey="value" cornerRadius={40} fill=""/>
           </RadialBarChart>
         </ChartContainer>
         <div className="text-center mt-4">

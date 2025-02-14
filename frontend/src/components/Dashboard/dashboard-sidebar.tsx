@@ -36,7 +36,7 @@ export function DashboardSidebar({ openNewTest,isCollapsed,openLogout }: Dashboa
   
   return (
       <Sidebar 
-        className="border-r bg-white shadow-lg h-full" collapsible={isCollapsed ? "collapsed" : "none"}>
+        className="border-r bg-white shadow-lg h-full" collapsible={isCollapsed ? "icon" : "none"}>
         
         <SidebarHeader className="border-b p-4 text-right md:text-center bg-gradient-to-r from-gray-900 to-blue-900">
           <h2 className="text-lg font-semibold text-white">Student Dashboard</h2>

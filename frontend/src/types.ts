@@ -28,7 +28,3 @@ export interface TestScore {
   totalScore:number;
   createdAt: string;
 }
-
-export interface TestResultsTableProps {
-  results: TestResult[]
-}

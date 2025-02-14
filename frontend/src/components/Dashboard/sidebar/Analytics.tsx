@@ -9,7 +9,7 @@ export default function AnalyticsPage() {
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
         <ComparisonChart />
         <ScoreDistribution />
-        <AccuracyCard accuracy={85} />
+        <AccuracyCard />
       </div>
     </div>
   )
