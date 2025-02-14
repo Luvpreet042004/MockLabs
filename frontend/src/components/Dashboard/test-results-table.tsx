@@ -7,7 +7,7 @@ interface TestResult {
   physicsScore: number
   chemistryScore: number
   totalScore: number
-  accuracy : string
+  accuracy : number
 }
 
 interface TestResultsTableProps {
@@ -38,7 +38,7 @@ export function TestResultsTable({ results }: TestResultsTableProps) {
               <TableCell className="px-6 py-4 text-right text-gray-700">{result.mathScore}</TableCell>
               <TableCell className="px-6 py-4 text-right text-gray-700">{result.physicsScore}</TableCell>
               <TableCell className="px-6 py-4 text-right text-gray-700">{result.chemistryScore}</TableCell>
-              <TableCell className="px-6 py-4 text-right font-semibold text-gray-900">{result.accuracy}%</TableCell>
+              <TableCell className="px-6 py-4 text-right font-semibold text-gray-900">{Math.floor(result.accuracy * 100)/100}%</TableCell>
               <TableCell className="px-6 py-4 text-right font-semibold text-blue-600">{result.totalScore}</TableCell>
             </TableRow>
           ))}

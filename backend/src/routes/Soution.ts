@@ -133,6 +133,7 @@ router.post("/compare", async (req: Request, res: Response) => {
 
         // Calculate accuracy (avoid division by zero)
         const accuracy = totalAttempts > 0 ? (correctAttempts / totalAttempts) * 100 : 0;
+        
         const userId = user?.id
         if(!userId){
             res.status(401).json({ message: "Unauthorized request" });

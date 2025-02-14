@@ -61,7 +61,7 @@ export const getTests = async (req: Request, res: Response) => {
             return
         }
 
-        res.status(200).json({ msg: "Test found", test });
+        res.status(200).json({ msg: "Test found",test});
         return
     } catch (error) {
         console.error("Error fetching test:", error);

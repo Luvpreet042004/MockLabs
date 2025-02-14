@@ -42,7 +42,7 @@ export function NewTestDialog({ isOpen, onClose }: NewTestDialogProps) {
       } catch (err : any) {
         setError(err.message)
       } finally {
-        setLoading(false)
+        setLoading(false) 
       }
     }
 

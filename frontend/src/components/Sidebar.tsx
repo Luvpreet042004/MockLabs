@@ -8,7 +8,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <div
-      className={`relative h-full transition-all duration-300 ${
+      className={`fixed h-full z-10 transition-all duration-300 ${
         isOpen ? "w-80" : "w-0"
       }`}
     >

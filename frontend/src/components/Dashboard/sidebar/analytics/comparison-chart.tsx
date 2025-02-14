@@ -20,7 +20,7 @@ export function ComparisonChart() {
           }
         }
       )
-
+ 
         setData(response.data)
       } catch (error) {
         console.log(error);

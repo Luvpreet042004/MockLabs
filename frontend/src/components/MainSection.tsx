@@ -8,6 +8,7 @@ import { useComparison } from "@/context/ComparisionContext";
 import axios from "axios";
 import { Skeleton } from "./ui/skeleton";
 import { useTimer } from "@/context/TimerContext";
+import Sidebar from "./Sidebar";
 
 const MainSection: React.FC = () => {
   const {time} = useTimer()
@@ -127,7 +128,7 @@ const MainSection: React.FC = () => {
       localStorage.setItem("accuracy", response.data.accuracy);
       const accuracy = localStorage.getItem("accuracy");
       console.log(accuracy);
-
+ 
       setIsReady(true);
     } catch (error) {
       console.error("Error comparing answers:", error);
@@ -145,6 +146,7 @@ const MainSection: React.FC = () => {
   return (
     <div className="w-full flex flex-col min-h-screen bg-gray-50">
       <TopBar />
+      <Sidebar />
 
       <div className="flex-1 flex flex-col lg:flex-row gap-6 p-6 max-w-8xl mx-auto w-full">
         <div className="flex-1 bg-white rounded-xl shadow-lg p-6 overflow-auto transition-all duration-300 hover:shadow-xl">

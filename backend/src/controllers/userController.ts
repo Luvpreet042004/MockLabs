@@ -150,11 +150,48 @@ export const getProfile = async (req: Request, res: Response) => {
       email: user.email,
       accountCreated: formatDateToIST(user.createdAt),
       totalTests,
-      averageScore: `${averageScore}%`,
-      bestScore: `${bestScore}%`,
+      averageScore: `${averageScore}`,
+      bestScore: `${bestScore}`,
     });
   } catch (error) {
     console.error("Error fetching profile:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getAverageAccuracy = async (req: Request, res: Response) => {
+  try {
+    const email = req.user?.email;
+
+    // Fetch user details
+    const user = await prisma.user.findUnique({
+      where: { email },
+      include: { tests: true },
+    });
+
+    if (!user) {
+       res.status(404).json({ message: "User not found" });
+       return
+    }
+
+    const tests = await prisma.test.findMany({
+      where: { userId : user.id },
+      select: { accuracy: true },
+    });
+
+    if (tests.length === 0) {
+      res.status(404).json({ error: "No tests found for this user" });
+      return
+    }
+
+    const totalAccuracy = tests.reduce((sum, test) => sum + test.accuracy, 0);
+    const num = totalAccuracy / tests.length;
+    const averageAccuracy = Math.floor(num * 100) / 100
+
+    res.json({ userId : user.id, averageAccuracy });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+    return
   }
 };

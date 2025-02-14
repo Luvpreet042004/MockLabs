@@ -2,6 +2,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartContainer } from "@/components/ui/chart"
+import axios from "axios"
+import { useEffect, useState } from "react"
 import { PolarAngleAxis, RadialBar, RadialBarChart } from "recharts"
 
 
@@ -18,8 +20,30 @@ const getColor = (accuracy: number) => {
     return `rgb(${red}, ${green}, 0)`
   }
 }
-export function AccuracyCard({ accuracy = 85 }: { accuracy: number }) {
+export function AccuracyCard() {
+  const [accuracy,setAccuracy] = useState<number>(0)
+  useEffect(()=>{
+    const fetchAvg = async ()=>{
+      try {
+        const token = localStorage.getItem("authToken")
+
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/user/getAcc`,{
+          headers:{
+            Authorization : `Bearer ${token}`,
+          }
+        }
+      )
+      console.log(response);
+      
+        setAccuracy(response.data.averageAccuracy)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchAvg()
+  })
   const data = [{ name: "Accuracy", value: accuracy }]
+
   const color = getColor(accuracy)
   const chartConfig = {
     Accuracy: {
@@ -38,7 +62,7 @@ export function AccuracyCard({ accuracy = 85 }: { accuracy: number }) {
           <RadialBarChart
             width={400}
             height={400}
-            innerRadius="100%"
+            innerRadius="100%" 
             outerRadius="140%"
             data={data}
             startAngle={230}

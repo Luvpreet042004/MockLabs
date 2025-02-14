@@ -1,4 +1,4 @@
-import { BarChart3, ClipboardList, FileSpreadsheet, Settings, User } from "lucide-react";
+import { BarChart3, ClipboardList, FileSpreadsheet, LogOut, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import {
@@ -11,14 +11,16 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useState } from "react";
 
 interface DashboardSidebarProps {
   openNewTest: () => void;
   isCollapsed : boolean;
+  openLogout:()=>void;
 }
 
-export function DashboardSidebar({ openNewTest,isCollapsed }: DashboardSidebarProps) {
-
+export function DashboardSidebar({ openNewTest,isCollapsed,openLogout }: DashboardSidebarProps) {
+  const [id,setId] = useState<number>(1)
   return (
       <Sidebar 
         className="border-r bg-white shadow-lg h-full" collapsible={isCollapsed ? "collapsed" : "none"}>
@@ -32,8 +34,8 @@ export function DashboardSidebar({ openNewTest,isCollapsed }: DashboardSidebarPr
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild className="hover:scale-105">
-                    <Link to="/dashboard">
+                  <SidebarMenuButton asChild className={`hover:scale-110   ${id == 1? "bg-blue-900 text-white hover:bg-slate-950 hover:text-white":"text-black"}`}>
+                    <Link to="/dashboard" onClick={()=>setId(1)}>
                       <ClipboardList className="mr-2 h-4 w-4 " />
                       All Tests
                     </Link>
@@ -48,8 +50,8 @@ export function DashboardSidebar({ openNewTest,isCollapsed }: DashboardSidebarPr
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild className="hover:scale-105">
-                    <Link to="/dashboard/analytics">
+                  <SidebarMenuButton asChild className={`hover:scale-105 ${id == 2? "bg-blue-900 text-white hover:bg-slate-950 hover:text-white":"text-black"}`}>
+                    <Link to="/dashboard/analytics" onClick={()=>setId(2)}>
                       <BarChart3 className="mr-2 h-4 w-4" />
                       Analytics
                     </Link>
@@ -57,15 +59,15 @@ export function DashboardSidebar({ openNewTest,isCollapsed }: DashboardSidebarPr
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild className="hover:scale-105">
-                    <Link to="/dashboard/settings">
-                      <Settings className="mr-2 h-4 w-4" />
-                      Settings
-                    </Link>
+                    <button onClick={openLogout}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Logout
+                    </button>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild className="hover:scale-105">
-                    <Link to="/dashboard/profile">
+                  <SidebarMenuButton asChild className={`hover:scale-105 ${id == 3? "bg-blue-900 text-white hover:bg-slate-950 hover:text-white":"text-black"}`}>
+                    <Link to="/dashboard/profile" onClick={()=>setId(3)}>
                       <User className="mr-2 h-4 w-4" />
                       Profile
                     </Link>

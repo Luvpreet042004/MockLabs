@@ -10,6 +10,7 @@ import { Routes,Route } from "react-router-dom";
 import ProfilePage from "../components/Dashboard/sidebar/Profile";
 import AnalyticsPage from "@/components/Dashboard/sidebar/Analytics";
 import { Menu } from "lucide-react";
+import { LogoutModal } from "@/components/Dashboard/sidebar/Logout";
 
 
 export default function DashboardPage() {
@@ -19,6 +20,7 @@ export default function DashboardPage() {
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isLogOut,setIsLoggingOut] = useState(false);
 
   // Handle screen resize to collapse sidebar on screens < 1024px
   useEffect(() => {
@@ -44,6 +46,8 @@ export default function DashboardPage() {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTestResults(response.data.test);
+        console.log("testResults",response);
+        
         localStorage.setItem("testResults", JSON.stringify(response.data.test));
       } catch (error: any) {
         setErr(error.message);
@@ -51,6 +55,9 @@ export default function DashboardPage() {
         setLoading(false);
       }
     };
+    localStorage.removeItem("timer")
+    localStorage.removeItem("questions")
+    localStorage.removeItem("comparisonResults")
     fetchData();
   }, []);
   
@@ -67,9 +74,18 @@ export default function DashboardPage() {
       >
         <Menu className="h-6 w-6" />
       </button>
-        <div className={`h-full fixed lg:flex z-10 lg:relative top-0 left-0 bg-white shadow-md border-r ${isCollapsed?"hidden":"flex"}`}>
-          <DashboardSidebar openNewTest={() => setIsNewTestOpen(true)} isCollapsed={isCollapsed} />
-        </div>
+      <div
+  className={`h-full fixed lg:flex z-10 lg:relative top-0 left-0 bg-white shadow-md border-r transition-transform duration-300 ease-in-out ${
+    isCollapsed ? "-translate-x-full" : "translate-x-0"
+  }`}
+>
+  <DashboardSidebar
+    openNewTest={() => setIsNewTestOpen(true)}
+    openLogout={() => setIsLoggingOut(true)}
+    isCollapsed={isCollapsed}
+  />
+</div>
+
 
         {/* Main Content - Allow scrolling */}
         <main className="flex-1 overflow-y-auto p-2 lg:p-8 bg-white shadow-md rounded-lg">
@@ -113,6 +129,7 @@ export default function DashboardPage() {
     </main>
       </div>
       <NewTestDialog isOpen={isNewTestOpen} onClose={() => setIsNewTestOpen(false)} />
+      <LogoutModal isLogOut={isLogOut} setIsLoggingOut = {()=>setIsLoggingOut(false)} />  
     </DashboardLayout>
   );
 }
