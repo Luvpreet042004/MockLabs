@@ -18,7 +18,7 @@ const Sidebar: React.FC = () => {
         className="absolute -right-3 top-1/2 z-20 flex h-7 w-7 -translate-y-1/2 transform items-center justify-center rounded-full bg-gradient-to-br from-teal-600 to-cyan-500 shadow-lg ring-2 ring-teal-500/20 transition-all hover:scale-110 hover:from-teal-500 hover:to-cyan-400 hover:ring-teal-500/40 hover:shadow-xl"
         aria-label={isOpen ? "Collapse sidebar" : "Expand sidebar"}
       >
-        {isOpen ? (
+        {isOpen ? ( 
           <ChevronLeft size={18} className="text-white" />
         ) : (
           <ChevronRight size={18} className="text-white animate-bounce" />

@@ -48,7 +48,7 @@ const MainSection: React.FC = () => {
   return (
     <div className="w-full flex flex-col min-h-screen bg-gray-50">
       <TopBar />
-      <Sidebar />
+      <Sidebar /> 
       <div className="flex-1 flex flex-col lg:flex-row gap-6 p-6 max-w-8xl mx-auto w-full">
         <div className="flex-1 bg-white rounded-xl shadow-lg p-6 overflow-auto transition-all duration-300 hover:shadow-xl">
           <QuestionSection question={currentQuestion} />

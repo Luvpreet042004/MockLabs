@@ -8,11 +8,11 @@ const Sidebar: React.FC = () => {
 
   return (
     <div
-      className={`relative h-full transition-all duration-300 ${
+      className={`fixed z-10 h-full transition-all duration-300 ${
         isOpen ? "w-80" : "w-0"
       }`}
     >
-      {/* Toggle Button */}
+      {/* Toggle Button */} 
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="absolute -right-3 top-1/2 z-20 flex h-7 w-7 -translate-y-1/2 transform items-center justify-center rounded-full bg-gradient-to-br from-teal-600 to-cyan-500 shadow-lg ring-2 ring-teal-500/20 transition-all hover:scale-110 hover:from-teal-500 hover:to-cyan-400 hover:ring-teal-500/40 hover:shadow-xl"
