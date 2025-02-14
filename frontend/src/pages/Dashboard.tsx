@@ -64,7 +64,7 @@ export default function DashboardPage() {
 
   return (
     <DashboardLayout>
-      <div className="flex h-screen w-full bg-gray-100">
+      <div className="flex font-inter h-screen w-full bg-gray-100">
         {/* Fixed Sidebar */}
         <button
         className={`lg:hidden fixed top-3 left-4 z-50 text-white p-2 rounded ${

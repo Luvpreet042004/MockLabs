@@ -21,7 +21,12 @@ interface TestChartProps {
 }
 
 export function TestResultsChart({ data, loading, err }: TestChartProps) {
-  const chartData = data;
+  data.sort((b, a) => {
+    const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+    const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+    return dateA - dateB; // Ascending order
+  });
+  const chartData = data.slice(0,5);
   console.log("chatData :", chartData );
   
 

@@ -26,7 +26,7 @@ function App() {
     <Router>
       <ComparisonProvider>
         <QuestionsProvider totalQuestions={90}>
-          <Routes>
+          <Routes >
             <Route path="/" element={<Landing />} />
             <Route path="/paper/:paper/:questionId" element={<TestScreen />} />
             <Route path="/paper/review/:paper/:questionId" element={<ReviewScreen />} />

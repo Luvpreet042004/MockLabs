@@ -4,27 +4,24 @@ import {Link, useNavigate} from "react-router-dom"
 export default function Home() {
   const navigate = useNavigate()
   return (
-    <div className="min-h-screen scroll-smooth text-black bg-[#fffff]">
+    <div className="min-h-screen font-inter scroll-smooth text-black bg-white">
       {/* Header */}
       <header className="fixed top-0 w-full z-50 bg-pink/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
             <span className="text-2xl font-bold text-black">MockLabs</span>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="#why-us" className="text-black-300 hover:text-white transition-colors">
+            <a href="#why-us" className="text-black-300 hover:text-white transition-colors">
               Why Us
-            </Link>
-            <Link href="#pricing" className="text-black-300 hover:text-white transition-colors">
-              Pricing
-            </Link>
-            <Link href="#works" className="text-black-300 hover:text-white transition-colors">
+            </a>
+            <a href="#works" className="text-black-300 hover:text-white transition-colors">
               Works
-            </Link>
-            <Link href="#careers" className="text-balck-300 hover:text-white transition-colors">
+            </a>
+            <a href="#careers" className="text-black-300 hover:text-white transition-colors">
               Careers
-            </Link>
+            </a>
             <Button onClick={()=>navigate('/signin')} className=" text-gray-300 hover:text-white hover:cursor-pointer">
                SignUp
             </Button>
@@ -52,14 +49,14 @@ export default function Home() {
           Master JEE Main & Advanced with AI-powered mock tests, adaptive learning, and real-time performance analysis—tailored for your success.
           </p>
 
-          <Button variant={'secondary'} className="bg-blue-600 hover:bg-blue-700 hover:cursor-pointer font-semibold text-white px-12 py-3 text-xl rounded-full">
+          <Button onClick={()=>navigate('/signin')} variant={'secondary'} className="bg-blue-600 hover:bg-blue-700 hover:cursor-pointer font-semibold text-white px-12 py-3 text-xl rounded-full">
             Start a Test
           </Button>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="container mx-auto px-4 py-20">
+      <section id="works" className="container mx-auto px-4 py-20">
         <div className="bg-[#0D1219] rounded-2xl p-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center p-6 bg-gradient-to-b from-gray-800/50 to-transparent rounded-xl">
@@ -79,11 +76,11 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="text-center mb-16">
+      <section id="why-us" className="container mx-auto px-4 py-20">
+        <div className=" text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Why Choose MockLabs</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            We combine creativity with strategic thinking to deliver best Enviroment.
+            We combine creativity with strategic thinking to deliver best Environment.
           </p>
         </div>
 
@@ -101,15 +98,15 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="container mx-auto px-4 py-20">
+      <section id="careers" className="container mx-auto px-4 py-20">
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Transform Your Jee Prep?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Transform Your JEE Prep?</h2>
           <p className="text-white/80 mb-8 max-w-2xl mx-auto">
-            Join hundreds of satisfied students who have elevated their prepration with our application.
+            Join hundreds of satisfied students who have elevated their preparation with our application.
           </p>
-          <button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-6 text-lg rounded-full">
+          <Button onClick={()=>navigate('/signin')}  className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-6 text-lg rounded-full">
             Get Started Now
-          </button>
+          </Button>
         </div>
       </section>
 
@@ -118,7 +115,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div>
-              <Link href="/" className="text-2xl font-bold text-white mb-6 block">
+              <Link to="/" className="text-2xl font-bold text-white mb-6 block">
                 MockLabs
               </Link>
               <p className="text-gray-400">Creating high-converting landing pages that drive results.</p>
@@ -127,17 +124,17 @@ export default function Home() {
               <h3 className="text-white font-semibold mb-4">Company</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link to="#" className="text-gray-400 hover:text-white">
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <a href="#careers" className="text-gray-400 hover:text-white">
                     Careers
-                  </Link>
+                  </a>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link to="#" className="text-gray-400 hover:text-white">
                     Blog
                   </Link>
                 </li>
@@ -147,17 +144,17 @@ export default function Home() {
               <h3 className="text-white font-semibold mb-4">Resources</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link to="#" className="text-gray-400 hover:text-white">
                     Documentation
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link to="#" className="text-gray-400 hover:text-white">
                     Help Center
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link to="#" className="text-gray-400 hover:text-white">
                     Guides
                   </Link>
                 </li>
@@ -167,17 +164,17 @@ export default function Home() {
               <h3 className="text-white font-semibold mb-4">Legal</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link to="#" className="text-gray-400 hover:text-white">
                     Privacy
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link to="#" className="text-gray-400 hover:text-white">
                     Terms
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link to="#" className="text-gray-400 hover:text-white">
                     Security
                   </Link>
                 </li>
@@ -219,7 +216,7 @@ const features = [
   },
   {
     title: "Data-Driven Approach",
-    description: "We use analytics and student's behavior data to continuously improve and optimize your experiance.",
+    description: "We use analytics and student's behavior data to continuously improve and optimize your experience.",
     icon: (
       <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path

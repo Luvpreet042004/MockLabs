@@ -4,6 +4,7 @@ import TopBar from "./TopBar";
 import QuestionSection from "./QuestionSection";
 import { useQuestions } from "../../context/QuestionStateContext";
 import { useComparison } from "../../context/ComparisionContext"; // Import the useComparison hook
+import Sidebar from "./Sidebar";
 
 const MainSection: React.FC = () => {
   const { updateStatus, getStatus, getAnswer } = useQuestions();
@@ -47,6 +48,7 @@ const MainSection: React.FC = () => {
   return (
     <div className="w-full flex flex-col min-h-screen bg-gray-50">
       <TopBar />
+      <Sidebar />
       <div className="flex-1 flex flex-col lg:flex-row gap-6 p-6 max-w-8xl mx-auto w-full">
         <div className="flex-1 bg-white rounded-xl shadow-lg p-6 overflow-auto transition-all duration-300 hover:shadow-xl">
           <QuestionSection question={currentQuestion} />

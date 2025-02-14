@@ -14,7 +14,8 @@ interface UserProfile {
 }
 
 export default function ProfilePage() {
-  const [isLoading, setIsLoading] = useState<boolean>(true); // Fix: Initialize to true
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const userPhoto = localStorage.getItem("userPhoto") || "";// Fix: Initialize to true
   const [profile, setProfile] = useState<UserProfile>({
     name: "",
     email: "",
@@ -49,17 +50,19 @@ export default function ProfilePage() {
   }, []); // Fix: Removed `profile` from dependency array to avoid infinite loop
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6">Profile</h1>
+    <div className="p-8 font-inter">
+      <h1 className="text-4xl text-center lg:text-left font-extrabold mb-6">Profile</h1>
 
       {isLoading ? (
         <div className="max-w-2xl mx-auto">
-          {/* Skeleton Loading UI */}
           <Card className="mb-6">
             <CardHeader>
-              <CardTitle>Personal Information</CardTitle>
+              <CardTitle className="font-bold">Personal Information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
+              <div className="flex justify-center mb-6">
+                <Skeleton className="h-24 w-24 rounded-full" />
+              </div>
               <Skeleton className="h-6 w-3/4 rounded-md" />
               <Skeleton className="h-6 w-2/3 rounded-md" />
               <Skeleton className="h-6 w-1/2 rounded-md" />
@@ -97,28 +100,40 @@ export default function ProfilePage() {
         <div className="max-w-2xl mx-auto">
           <Card className="mb-6">
             <CardHeader>
-              <CardTitle>Personal Information</CardTitle>
+              <CardTitle className="font-bold text-2xl">Personal Information</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center space-x-4">
-                <User className="h-5 w-5 text-muted-foreground" />
-                <div>
-                  <p className="text-sm text-muted-foreground">Name</p>
-                  <p className="font-medium">{profile.name}</p>
+            <CardContent>
+              <div className="flex justify-center mb-6">
+                <div className="relative">
+                  <img
+                    src={userPhoto || "/placeholder.svg"}
+                    alt={`${profile?.name}'s profile photo`}
+                    className="h-24 w-24 rounded-full object-cover border-4 border-background shadow-md"
+                  />
+                  <div className="absolute inset-0 rounded-full ring-2 ring-primary/10"></div>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
-                <Mail className="h-5 w-5 text-muted-foreground" />
-                <div>
-                  <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium">{profile.email}</p>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-4">
+                  <User className="h-5 w-5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Name</p>
+                    <p className="font-medium">{profile?.name}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <CalendarDays className="h-5 w-5 text-muted-foreground" />
-                <div>
-                  <p className="text-sm text-muted-foreground">Account Created</p>
-                  <p className="font-medium">{profile.accountCreated}</p>
+                <div className="flex items-center space-x-4">
+                  <Mail className="h-5 w-5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Email</p>
+                    <p className="font-medium">{profile?.email}</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <CalendarDays className="h-5 w-5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Account Created</p>
+                    <p className="font-medium">{profile?.accountCreated}</p>
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -127,26 +142,26 @@ export default function ProfilePage() {
           <div className="grid gap-6 md:grid-cols-3">
             <Card>
               <CardHeader>
-                <CardTitle>Total Tests</CardTitle>
+                <CardTitle className="font-bold text-xl">Total Tests</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold">{profile.totalTests}</p>
+                <p className="text-3xl font-bold">{profile?.totalTests}</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Average Score</CardTitle>
+                <CardTitle className="font-bold text-xl">Average Score</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold">{profile.averageScore}</p>
+                <p className="text-3xl font-bold">{profile?.averageScore}</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Best Score</CardTitle>
+                <CardTitle className="font-bold text-xl">Best Score</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold">{profile.bestScore}</p>
+                <p className="text-3xl font-bold">{profile?.bestScore}</p>
               </CardContent>
             </Card>
           </div>

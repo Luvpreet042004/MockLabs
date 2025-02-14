@@ -59,10 +59,10 @@ export function NewTestDialog({ isOpen, onClose }: NewTestDialogProps) {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Start New Test</DialogTitle>
-          <DialogDescription>Select a test from the available options below.</DialogDescription>
+          <DialogTitle className="font-inter">Start New Test</DialogTitle>
+          <DialogDescription className="font-inter">Select a test from the available options below.</DialogDescription>
         </DialogHeader>
-        <div className="space-y-4 py-4">
+        <div className="space-y-4 py-4 font-inter">
           {loading ? (
             <p>Loading tests...</p>
           ) : error ? (

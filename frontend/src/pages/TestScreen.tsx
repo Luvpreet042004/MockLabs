@@ -1,6 +1,5 @@
 import React from "react";
 import { QuestionsProvider } from "../context/QuestionStateProvider";
-import Sidebar from "../components/Sidebar";
 import MainSection from "../components/MainSection";
 import { TimerProvider } from "@/context/TImerProvider";
 
@@ -10,7 +9,6 @@ const TestScreen :React.FC = ()=>{
       <TimerProvider>
       <QuestionsProvider totalQuestions={90}>
     <div className="flex w-screen h-screen">
-        <Sidebar />
       <div className="w-full">
         <MainSection />
       </div>

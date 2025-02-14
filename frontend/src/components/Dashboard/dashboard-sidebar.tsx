@@ -1,5 +1,5 @@
 import { BarChart3, ClipboardList, FileSpreadsheet, LogOut, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import {
   Sidebar,
@@ -11,7 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useState } from "react";
+import {  useEffect, useState } from "react";
 
 interface DashboardSidebarProps {
   openNewTest: () => void;
@@ -19,8 +19,21 @@ interface DashboardSidebarProps {
   openLogout:()=>void;
 }
 
+
+
 export function DashboardSidebar({ openNewTest,isCollapsed,openLogout }: DashboardSidebarProps) {
-  const [id,setId] = useState<number>(1)
+  const location = useLocation();
+  const [id, setId] = useState<number>(1); // Default id = 1
+  useEffect(() => {
+    if (location.pathname.includes("analytics")) {
+      setId(2);
+    } else if (location.pathname.includes("profile")) {
+      setId(3);
+    } else {
+      setId(1);
+    }
+  }, [location.pathname]);
+  
   return (
       <Sidebar 
         className="border-r bg-white shadow-lg h-full" collapsible={isCollapsed ? "collapsed" : "none"}>
